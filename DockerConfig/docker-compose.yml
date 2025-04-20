@@ -1,0 +1,30 @@
+# DockerConfig/docker-compose.yml
+version: '3.8'
+
+services:
+  db:
+    image: bitnami/postgresql:latest
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=db-finance
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: ..
+      dockerfile: DockerConfig/Dockerfile
+    volumes:
+      - ../src:/app/src
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://docker:docker@db:5432/db-finance
+
+volumes:
+  pgdata:
