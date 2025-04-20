@@ -3,6 +3,7 @@ CREATE TABLE "users" (
   "username" varchar2,
   "email" varchar2,
   "senha" varchar2,
+  "status_users": bool,
   "created_at" timestamp
 );
 
